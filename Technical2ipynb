@@ -1,0 +1,1276 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPUe3mjYnNkL3w3Z0u5Fi8F",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/josephinesantander/dataframe-exercise/blob/main/Technical2ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "UqqZxoGplb06",
+        "outputId": "a8e762b0-e4a2-4cb6-c6c1-ee6688fd56b8"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "   OrderID   Product     Category  Quantity  Price Customer Region  Total\n",
+            "0     1001    Laptop  Electronics         2    800    Alice  North   1600\n",
+            "1     1002     Mouse  Accessories         5     20      Bob  South    100\n",
+            "2     1003  Keyboard  Accessories         3     50  Charlie   East    150\n",
+            "3     1004   Monitor  Electronics         4    200    Diana   West    800\n",
+            "4     1005    Laptop  Electronics         1    850    Ethan  North    850\n"
+          ]
+        }
+      ],
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample sales dataset (20 rows)\n",
+        "data = {\n",
+        "    \"OrderID\": range(1001, 1021),\n",
+        "    \"Product\": [\n",
+        "        \"Laptop\", \"Mouse\", \"Keyboard\", \"Monitor\", \"Laptop\",\n",
+        "        \"Headphones\", \"Mouse\", \"Chair\", \"Desk\", \"Laptop\",\n",
+        "        \"Printer\", \"Keyboard\", \"Monitor\", \"Mouse\", \"Laptop\",\n",
+        "        \"Headphones\", \"Desk\", \"Monitor\", \"Printer\", \"Chair\"\n",
+        "    ],\n",
+        "    \"Category\": [\n",
+        "        \"Electronics\", \"Accessories\", \"Accessories\", \"Electronics\", \"Electronics\",\n",
+        "        \"Accessories\", \"Accessories\", \"Furniture\", \"Furniture\", \"Electronics\",\n",
+        "        \"Electronics\", \"Accessories\", \"Electronics\", \"Accessories\", \"Electronics\",\n",
+        "        \"Accessories\", \"Furniture\", \"Electronics\", \"Electronics\", \"Furniture\"\n",
+        "    ],\n",
+        "    \"Quantity\": [2, 5, 3, 4, 1, 6, 10, 2, 1, 3, 2, 4, 2, 7, 5, 3, 2, 4, 1, 6],\n",
+        "    \"Price\": [800, 20, 50, 200, 850, 40, 25, 150, 300, 900, 120, 55, 250, 20, 750, 35, 280, 220, 110, 180],\n",
+        "    \"Customer\": [\n",
+        "        \"Alice\", \"Bob\", \"Charlie\", \"Diana\", \"Ethan\",\n",
+        "        \"Fiona\", \"George\", \"Hannah\", \"Ian\", \"Jane\",\n",
+        "        \"Kyle\", \"Laura\", \"Mike\", \"Nina\", \"Oscar\",\n",
+        "        \"Paul\", \"Queen\", \"Robert\", \"Sarah\", \"Tom\"\n",
+        "    ],\n",
+        "    \"Region\": [\n",
+        "        \"North\", \"South\", \"East\", \"West\", \"North\",\n",
+        "        \"South\", \"East\", \"West\", \"North\", \"South\",\n",
+        "        \"East\", \"West\", \"North\", \"South\", \"East\",\n",
+        "        \"West\", \"North\", \"South\", \"East\", \"West\"\n",
+        "    ]\n",
+        "}\n",
+        "\n",
+        "# Create DataFrame\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Compute Total column\n",
+        "df[\"Total\"] = df[\"Quantity\"] * df[\"Price\"]\n",
+        "\n",
+        "# Print the first 5 rows\n",
+        "print(df.head())"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Print the number of rows and columns\n",
+        "rows, cols = df.shape\n",
+        "print(f\"Number of rows: {rows}\")\n",
+        "print(f\"Number of columns: {cols}\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "pxim0oBFmZtA",
+        "outputId": "795ef35d-df60-4f01-92cf-9c7500569008"
+      },
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Number of rows: 20\n",
+            "Number of columns: 8\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(\"Columns:\", df.columns.tolist())"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "sOlKSLnjn7wd",
+        "outputId": "fbee9dcc-28e8-48e5-a4fc-b6588ae74ed2"
+      },
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Columns: ['OrderID', 'Product', 'Category', 'Quantity', 'Price', 'Customer', 'Region', 'Total']\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Step 1: Add Discount column (10% if Quantity >= 5 else 0)\n",
+        "df[\"Discount\"] = df[\"Total\"] * 0.10 * (df[\"Quantity\"] >= 5)\n",
+        "\n",
+        "# Step 2: Add FinalTotal column (Total - discount)\n",
+        "df[\"FinalTotal\"] = df[\"Total\"] - df[\"Discount\"]\n",
+        "\n",
+        "# Step 3: Show selected columns\n",
+        "print(df[[\"OrderID\", \"Product\", \"Total\", \"Discount\", \"FinalTotal\"]].head())"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "A-eBMBvpopZ0",
+        "outputId": "edb14e14-f6b0-4405-b2fc-70b0f2043137"
+      },
+      "execution_count": 23,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "   OrderID   Product  Total  Discount  FinalTotal\n",
+            "0     1001    Laptop   1600       0.0      1600.0\n",
+            "1     1002     Mouse    100      10.0        90.0\n",
+            "2     1003  Keyboard    150       0.0       150.0\n",
+            "3     1004   Monitor    800       0.0       800.0\n",
+            "4     1005    Laptop    850       0.0       850.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample existing DataFrame (replace with your actual data if needed)\n",
+        "df = pd.DataFrame([\n",
+        "    {\"OrderID\": 1019, \"Product\": \"Laptop\", \"Category\": \"Electronics\", \"Quantity\": 1, \"Price\": 1200, \"Customer\": \"Alice\", \"Region\": \"North\"},\n",
+        "    {\"OrderID\": 1020, \"Product\": \"Phone\", \"Category\": \"Electronics\", \"Quantity\": 3, \"Price\": 800, \"Customer\": \"Bob\", \"Region\": \"West\"}\n",
+        "])\n",
+        "\n",
+        "# Step 1: Create new record\n",
+        "new_row = {\n",
+        "    \"OrderID\": 1021,\n",
+        "    \"Product\": \"Tablet\",\n",
+        "    \"Category\": \"Electronics\",\n",
+        "    \"Quantity\": 2,\n",
+        "    \"Price\": 450,\n",
+        "    \"Customer\": \"Victor\",\n",
+        "    \"Region\": \"East\"\n",
+        "}\n",
+        "\n",
+        "# Step 2: Append the new record to the DataFrame\n",
+        "df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)\n",
+        "\n",
+        "# Step 3: Recalculate the 'Total' column\n",
+        "df[\"Total\"] = df[\"Quantity\"] * df[\"Price\"]\n",
+        "\n",
+        "# Step 4: Display the last 3 rows\n",
+        "print(df.tail(3))\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "xLbFTogntSc_",
+        "outputId": "60cea338-db1c-4e1e-bca9-0639f640fbd9"
+      },
+      "execution_count": 34,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "   OrderID Product     Category  Quantity  Price Customer Region  Total\n",
+            "0     1019  Laptop  Electronics         1   1200    Alice  North   1200\n",
+            "1     1020   Phone  Electronics         3    800      Bob   West   2400\n",
+            "2     1021  Tablet  Electronics         2    450   Victor   East    900\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample existing DataFrame (you can replace this with your actual data)\n",
+        "df = pd.DataFrame([\n",
+        "    {\"OrderID\": 1019, \"Product\": \"Laptop\", \"Category\": \"Electronics\", \"Quantity\": 1, \"Price\": 1200, \"Customer\": \"Alice\", \"Region\": \"North\", \"Total\": 1200},\n",
+        "    {\"OrderID\": 1020, \"Product\": \"Phone\", \"Category\": \"Electronics\", \"Quantity\": 3, \"Price\": 800, \"Customer\": \"Bob\", \"Region\": \"West\", \"Total\": 2400}\n",
+        "])\n",
+        "\n",
+        "# Step 1: Create new record\n",
+        "new_row = {\n",
+        "    \"OrderID\": 1021,\n",
+        "    \"Product\": \"Tablet\",\n",
+        "    \"Category\": \"Electronics\",\n",
+        "    \"Quantity\": 2,\n",
+        "    \"Price\": 450,\n",
+        "    \"Customer\": \"Victor\",\n",
+        "    \"Region\": \"East\"\n",
+        "}\n",
+        "\n",
+        "# Step 2: Append the new record to the DataFrame\n",
+        "df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)\n",
+        "\n",
+        "# Step 3: Recalculate 'Total' only for the new row\n",
+        "df.loc[df.index[-1], \"Total\"] = df.loc[df.index[-1], \"Quantity\"] * df.loc[df.index[-1], \"Price\"]\n",
+        "\n",
+        "# Step 4: Display the last 3 rows\n",
+        "print(df.tail(3))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "zm51ngnavz5l",
+        "outputId": "5b64befb-66a7-4ae0-93aa-0d8825b59e70"
+      },
+      "execution_count": 35,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "   OrderID Product     Category  Quantity  Price Customer Region   Total\n",
+            "0     1019  Laptop  Electronics         1   1200    Alice  North  1200.0\n",
+            "1     1020   Phone  Electronics         3    800      Bob   West  2400.0\n",
+            "2     1021  Tablet  Electronics         2    450   Victor   East   900.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample existing DataFrame\n",
+        "df = pd.DataFrame([\n",
+        "    {\"OrderID\": 1019, \"Product\": \"Laptop\", \"Category\": \"Electronics\", \"Quantity\": 1, \"Price\": 1200, \"Customer\": \"Alice\", \"Region\": \"North\", \"Total\": 1200},\n",
+        "    {\"OrderID\": 1020, \"Product\": \"Phone\", \"Category\": \"Electronics\", \"Quantity\": 3, \"Price\": 800, \"Customer\": \"Bob\", \"Region\": \"West\", \"Total\": 2400}\n",
+        "])\n",
+        "\n",
+        "# Step 1: Create new record\n",
+        "new_row = {\n",
+        "    \"OrderID\": 1021,\n",
+        "    \"Product\": \"Tablet\",\n",
+        "    \"Category\": \"Electronics\",\n",
+        "    \"Quantity\": 2,\n",
+        "    \"Price\": 450,\n",
+        "    \"Customer\": \"Victor\",\n",
+        "    \"Region\": \"East\"\n",
+        "}\n",
+        "\n",
+        "# Step 2: Append the new record to the DataFrame\n",
+        "df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)\n",
+        "\n",
+        "# Step 3: Recalculate 'Total' only for the new row\n",
+        "df.loc[df.index[-1], \"Total\"] = df.loc[df.index[-1], \"Quantity\"] * df.loc[df.index[-1], \"Price\"]\n",
+        "\n",
+        "# Step 4: Verify by printing the last 3 rows\n",
+        "print(df.tail(3))\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "1dGoTL28wAuc",
+        "outputId": "6f3be497-cf6b-47c6-b8b5-1a539bef68c2"
+      },
+      "execution_count": 36,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "   OrderID Product     Category  Quantity  Price Customer Region   Total\n",
+            "0     1019  Laptop  Electronics         1   1200    Alice  North  1200.0\n",
+            "1     1020   Phone  Electronics         3    800      Bob   West  2400.0\n",
+            "2     1021  Tablet  Electronics         2    450   Victor   East   900.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Step 1: Update price of Mouse products to 30\n",
+        "df.loc[df[\"Product\"] == \"Mouse\", \"Price\"] = 30\n",
+        "\n",
+        "# Step 2: Recalculate Total for affected rows\n",
+        "df[\"Total\"] = df[\"Quantity\"] * df[\"Price\"]\n",
+        "\n",
+        "# Step 3: Show only Mouse rows\n",
+        "print(df[df[\"Product\"] == \"Mouse\"])"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "Pef1Y4l2wQc1",
+        "outputId": "7a741c98-5c1a-44e2-c664-5a878ca97fc0"
+      },
+      "execution_count": 38,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Empty DataFrame\n",
+            "Columns: [OrderID, Product, Category, Quantity, Price, Customer, Region, Total]\n",
+            "Index: []\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Step 1: Update price of Mouse products to 30\n",
+        "df.loc[df[\"Product\"] == \"Mouse\", \"Price\"] = 30\n",
+        "\n",
+        "# Step 2: Recalculate Total only for Mouse rows\n",
+        "df.loc[df[\"Product\"] == \"Mouse\", \"Total\"] = df[\"Quantity\"] * df[\"Price\"]\n",
+        "\n",
+        "# Step 3: Show only Mouse rows\n",
+        "print(df[df[\"Product\"] == \"Mouse\"])"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "wTQSVpl1wnsj",
+        "outputId": "970c3820-1bc2-4694-8b47-2f4aac5e33fd"
+      },
+      "execution_count": 39,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Empty DataFrame\n",
+            "Columns: [OrderID, Product, Category, Quantity, Price, Customer, Region, Total]\n",
+            "Index: []\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Step 1: Update price of Mouse products to 30\n",
+        "df.loc[df[\"Product\"] == \"Mouse\", \"Price\"] = 30\n",
+        "\n",
+        "# Step 2: Recalculate Total only for Mouse rows\n",
+        "df.loc[df[\"Product\"] == \"Mouse\", \"Total\"] = df[\"Quantity\"] * df[\"Price\"]\n",
+        "\n",
+        "# Step 3: Print only Mouse rows to confirm the update\n",
+        "print(df[df[\"Product\"] == \"Mouse\"])\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "j8ykc037wx-k",
+        "outputId": "07c25780-7809-4c37-c6cf-29ce062961a8"
+      },
+      "execution_count": 40,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Empty DataFrame\n",
+            "Columns: [OrderID, Product, Category, Quantity, Price, Customer, Region, Total]\n",
+            "Index: []\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample DataFrame for demonstration\n",
+        "data = {\n",
+        "    'Product': ['A', 'B', 'C'],\n",
+        "    'Price': [100, 200, 300],\n",
+        "    'Discount': [10, 20, 30],\n",
+        "    'FinalTotal': [90, 180, 270]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Step 1: Drop Discount column\n",
+        "df = df.drop(columns=['Discount'])\n",
+        "\n",
+        "# Step 2: Show updated DataFrame\n",
+        "print(df.head())"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "1qZLSl0ew5M8",
+        "outputId": "77da913a-dd7e-4c3d-8ae5-16b4c1301cd4"
+      },
+      "execution_count": 41,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "  Product  Price  FinalTotal\n",
+            "0       A    100          90\n",
+            "1       B    200         180\n",
+            "2       C    300         270\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample DataFrame for demonstration\n",
+        "data = {\n",
+        "    'Product': ['A', 'B', 'C'],\n",
+        "    'Price': [100, 200, 300],\n",
+        "    'Discount': [10, 20, 30],\n",
+        "    'FinalTotal': [90, 180, 270]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Step 1: Drop FinalTotal column\n",
+        "df = df.drop(columns=['FinalTotal'])\n",
+        "\n",
+        "# Step 2: Show updated DataFrame\n",
+        "print(df.head())"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "rkN-K_lExJAr",
+        "outputId": "82886505-ade2-419d-bd3c-3e00e6bd688d"
+      },
+      "execution_count": 42,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "  Product  Price  Discount\n",
+            "0       A    100        10\n",
+            "1       B    200        20\n",
+            "2       C    300        30\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample DataFrame for demonstration\n",
+        "data = {\n",
+        "    'Product': ['A', 'B', 'C'],\n",
+        "    'Price': [100, 200, 300],\n",
+        "    'Discount': [10, 20, 30],\n",
+        "    'FinalTotal': [90, 180, 270]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Drop the \"Discount\" and \"FinalTotal\" columns\n",
+        "df = df.drop(columns=['Discount', 'FinalTotal'])\n",
+        "\n",
+        "# Print the updated DataFrame with only the remaining columns\n",
+        "print(df)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "pbK0nzxyxP_E",
+        "outputId": "102fc626-c6b0-42ba-f750-cdc14113a3df"
+      },
+      "execution_count": 43,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "  Product  Price\n",
+            "0       A    100\n",
+            "1       B    200\n",
+            "2       C    300\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample DataFrame (you can replace this with your actual data)\n",
+        "data = {\n",
+        "    \"OrderID\": [1001, 1002, 1010, 1004, 1005],\n",
+        "    \"Customer\": [\"Alice\", \"Bob\", \"Charlie\", \"David\", \"Eva\"],\n",
+        "    \"Amount\": [250, 150, 300, 400, 100]\n",
+        "}\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Step 1: Drop row with OrderID = 1010\n",
+        "df = df.drop(df[df[\"OrderID\"] == 1010].index, axis=0)\n",
+        "\n",
+        "# Step 2: Drop the first row by index\n",
+        "df = df.drop(index=df.index[0])\n",
+        "\n",
+        "# Step 3: Print new shape\n",
+        "print(\"New shape:\", df.shape)\n",
+        "\n",
+        "# Optional: Display the updated DataFrame\n",
+        "print(df)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "OhRk2wZaxzkU",
+        "outputId": "487b2a56-8569-437a-8fe8-af8aca5c2868"
+      },
+      "execution_count": 44,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "New shape: (3, 3)\n",
+            "   OrderID Customer  Amount\n",
+            "1     1002      Bob     150\n",
+            "3     1004    David     400\n",
+            "4     1005      Eva     100\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample DataFrame (replace with your actual data)\n",
+        "data = {\n",
+        "    \"OrderID\": [1001, 1002, 1003, 1004],\n",
+        "    \"Customer\": [\"Alice\", \"Bob\", \"Charlie\", \"David\"],\n",
+        "    \"Amount\": [250, 150, 300, 400]\n",
+        "}\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Step 1: Drop the first row by index\n",
+        "df = df.drop(index=df.index[0])\n",
+        "\n",
+        "# Step 2: Print new shape\n",
+        "print(\"New shape:\", df.shape)\n",
+        "\n",
+        "# Step 3: Display updated DataFrame\n",
+        "print(df)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "C3DXPIOLyEfk",
+        "outputId": "71b0360a-d820-481b-fca8-5df0b0060cd6"
+      },
+      "execution_count": 45,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "New shape: (3, 3)\n",
+            "   OrderID Customer  Amount\n",
+            "1     1002      Bob     150\n",
+            "2     1003  Charlie     300\n",
+            "3     1004    David     400\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample DataFrame (replace with your actual data)\n",
+        "data = {\n",
+        "    \"OrderID\": [1001, 1002, 1003, 1004],\n",
+        "    \"Customer\": [\"Alice\", \"Bob\", \"Charlie\", \"David\"],\n",
+        "    \"Amount\": [250, 150, 300, 400]\n",
+        "}\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Step 1: Drop the first row by index\n",
+        "df = df.drop(index=df.index[0])\n",
+        "\n",
+        "# Step 2: Print new shape in rows × columns format\n",
+        "print(f\"New shape: {df.shape[0]} × {df.shape[1]}\")\n",
+        "\n",
+        "# Step 3: Display updated DataFrame\n",
+        "print(df)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "AU_i7Gn2yVu9",
+        "outputId": "52450db3-a2ad-4107-8329-be837f1d6e30"
+      },
+      "execution_count": 46,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "New shape: 3 × 3\n",
+            "   OrderID Customer  Amount\n",
+            "1     1002      Bob     150\n",
+            "2     1003  Charlie     300\n",
+            "3     1004    David     400\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample data\n",
+        "data = {\n",
+        "    \"Product\": [\"Laptop\", \"TV\", \"Phone\", \"Tablet\", \"Camera\", \"Shoes\", \"Watch\"],\n",
+        "    \"Category\": [\"Electronics\", \"Electronics\", \"Electronics\", \"Electronics\", \"Electronics\", \"Fashion\", \"Fashion\"],\n",
+        "    \"Quantity\": [5, 2, 3, 1, 4, 10, 6],\n",
+        "    \"Price\": [1000, 800, 600, 300, 450, 120, 200],\n",
+        "    \"Region\": [\"North\", \"South\", \"North\", \"East\", \"West\", \"North\", \"South\"]\n",
+        "}\n",
+        "\n",
+        "# Create DataFrame\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Step 1: Electronics with Quantity >= 3\n",
+        "result1 = df[(df[\"Category\"] == \"Electronics\") & (df[\"Quantity\"] >= 3)]\n",
+        "print(\"Electronics with Quantity >= 3:\")\n",
+        "print(result1)\n",
+        "\n",
+        "# Step 2: Products with Price > 500\n",
+        "result2 = df[df[\"Price\"] > 500]\n",
+        "print(\"\\nProducts with Price > 500:\")\n",
+        "print(result2)\n",
+        "\n",
+        "# Step 3: Count orders from North region\n",
+        "count_north = df[df[\"Region\"] == \"North\"].shape[0]\n",
+        "print(\"\\nNorth orders:\", count_north)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "8Qg71MtOyiry",
+        "outputId": "2f44862a-d79a-43cc-d6bd-9d75f720dc30"
+      },
+      "execution_count": 47,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Electronics with Quantity >= 3:\n",
+            "  Product     Category  Quantity  Price Region\n",
+            "0  Laptop  Electronics         5   1000  North\n",
+            "2   Phone  Electronics         3    600  North\n",
+            "4  Camera  Electronics         4    450   West\n",
+            "\n",
+            "Products with Price > 500:\n",
+            "  Product     Category  Quantity  Price Region\n",
+            "0  Laptop  Electronics         5   1000  North\n",
+            "1      TV  Electronics         2    800  South\n",
+            "2   Phone  Electronics         3    600  North\n",
+            "\n",
+            "North orders: 3\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample data\n",
+        "data = {\n",
+        "    \"Product\": [\"Laptop\", \"TV\", \"Phone\", \"Tablet\", \"Camera\", \"Shoes\", \"Watch\"],\n",
+        "    \"Category\": [\"Electronics\", \"Electronics\", \"Electronics\", \"Electronics\", \"Electronics\", \"Fashion\", \"Fashion\"],\n",
+        "    \"Quantity\": [5, 2, 3, 1, 4, 10, 6],\n",
+        "    \"Price\": [1000, 800, 600, 300, 450, 120, 200],\n",
+        "    \"Region\": [\"North\", \"South\", \"North\", \"East\", \"West\", \"North\", \"South\"]\n",
+        "}\n",
+        "\n",
+        "# Create DataFrame\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Filter rows where Price > 500\n",
+        "result = df[df[\"Price\"] > 500]\n",
+        "print(\"Products with Price > 500:\")\n",
+        "print(result)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "ZtUjhEmkzaIJ",
+        "outputId": "c2cdaa7c-c295-4112-e9f5-a97106291ca2"
+      },
+      "execution_count": 48,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Products with Price > 500:\n",
+            "  Product     Category  Quantity  Price Region\n",
+            "0  Laptop  Electronics         5   1000  North\n",
+            "1      TV  Electronics         2    800  South\n",
+            "2   Phone  Electronics         3    600  North\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample data\n",
+        "data = {\n",
+        "    \"Product\": [\"Laptop\", \"TV\", \"Phone\", \"Tablet\", \"Camera\", \"Shoes\", \"Watch\"],\n",
+        "    \"Category\": [\"Electronics\", \"Electronics\", \"Electronics\", \"Electronics\", \"Electronics\", \"Fashion\", \"Fashion\"],\n",
+        "    \"Quantity\": [5, 2, 3, 1, 4, 10, 6],\n",
+        "    \"Price\": [1000, 800, 600, 300, 450, 120, 200],\n",
+        "    \"Region\": [\"North\", \"South\", \"North\", \"East\", \"West\", \"North\", \"South\"]\n",
+        "}\n",
+        "\n",
+        "# Create DataFrame\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Count orders from North region\n",
+        "count_north = df[df[\"Region\"] == \"North\"].shape[0]\n",
+        "print(\"North orders:\", count_north)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "8k_ShnTDzkjq",
+        "outputId": "4cd05873-1783-4859-d986-59186c2c746b"
+      },
+      "execution_count": 49,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "North orders: 3\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample DataFrame (you can replace this with your actual data)\n",
+        "data = {\n",
+        "    \"Region\": [\"West\", \"East\", \"West\", \"South\", \"North\", \"West\"],\n",
+        "    \"Customer\": [\"Alice\", \"Bob\", \"Charlie\", \"Alice\", \"David\", \"Alice\"],\n",
+        "    \"Product\": [\"Laptop\", \"Printer\", \"Tablet\", \"Laptop\", \"Monitor\", \"Printer\"],\n",
+        "    \"Sales\": [1200, 800, 600, 1500, 700, 900]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Step 1: Display all sales from the \"West\" region\n",
+        "west_sales = df[df[\"Region\"] == \"West\"]\n",
+        "print(\"Sales in West region:\")\n",
+        "print(west_sales)\n",
+        "\n",
+        "# Step 2: Display all sales by Alice\n",
+        "alice_sales = df[df[\"Customer\"] == \"Alice\"]\n",
+        "print(\"\\nSales by Alice:\")\n",
+        "print(alice_sales)\n",
+        "\n",
+        "# Step 3: Display all sales of Laptop or Printer\n",
+        "subset_sales = df[df[\"Product\"].isin([\"Laptop\", \"Printer\"])]\n",
+        "print(\"\\nSales of Laptop or Printer:\")\n",
+        "print(subset_sales)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "6mmK3NvUzx0q",
+        "outputId": "9be91656-dafd-46b1-b67c-b99619d6aa83"
+      },
+      "execution_count": 50,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Sales in West region:\n",
+            "  Region Customer  Product  Sales\n",
+            "0   West    Alice   Laptop   1200\n",
+            "2   West  Charlie   Tablet    600\n",
+            "5   West    Alice  Printer    900\n",
+            "\n",
+            "Sales by Alice:\n",
+            "  Region Customer  Product  Sales\n",
+            "0   West    Alice   Laptop   1200\n",
+            "3  South    Alice   Laptop   1500\n",
+            "5   West    Alice  Printer    900\n",
+            "\n",
+            "Sales of Laptop or Printer:\n",
+            "  Region Customer  Product  Sales\n",
+            "0   West    Alice   Laptop   1200\n",
+            "1   East      Bob  Printer    800\n",
+            "3  South    Alice   Laptop   1500\n",
+            "5   West    Alice  Printer    900\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample DataFrame (replace with your actual data)\n",
+        "data = {\n",
+        "    \"Region\": [\"West\", \"East\", \"West\", \"South\", \"North\", \"West\"],\n",
+        "    \"Customer\": [\"Alice\", \"Bob\", \"Charlie\", \"Alice\", \"David\", \"Alice\"],\n",
+        "    \"Product\": [\"Laptop\", \"Printer\", \"Tablet\", \"Laptop\", \"Monitor\", \"Printer\"],\n",
+        "    \"Sales\": [1200, 800, 600, 1500, 700, 900]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Display all sales made by the customer \"Alice\"\n",
+        "alice_sales = df[df[\"Customer\"] == \"Alice\"]\n",
+        "print(\"Sales made by Alice:\")\n",
+        "print(alice_sales)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "tbwB7A9pz6fi",
+        "outputId": "1d8a53c5-0389-45f4-b6d2-d594421e3332"
+      },
+      "execution_count": 51,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Sales made by Alice:\n",
+            "  Region Customer  Product  Sales\n",
+            "0   West    Alice   Laptop   1200\n",
+            "3  South    Alice   Laptop   1500\n",
+            "5   West    Alice  Printer    900\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample DataFrame (replace with your actual data)\n",
+        "data = {\n",
+        "    \"Region\": [\"West\", \"East\", \"West\", \"South\", \"North\", \"West\"],\n",
+        "    \"Customer\": [\"Alice\", \"Bob\", \"Charlie\", \"Alice\", \"David\", \"Alice\"],\n",
+        "    \"Product\": [\"Laptop\", \"Printer\", \"Tablet\", \"Laptop\", \"Monitor\", \"Printer\"],\n",
+        "    \"Sales\": [1200, 800, 600, 1500, 700, 900]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Display all sales where Product is Laptop or Printer\n",
+        "subset_sales = df[df[\"Product\"].isin([\"Laptop\", \"Printer\"])]\n",
+        "print(\"Sales of Laptop or Printer:\")\n",
+        "print(subset_sales)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "rdbTxKBU0B26",
+        "outputId": "9ea50156-f692-4112-8fd1-95131ab85bb5"
+      },
+      "execution_count": 52,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Sales of Laptop or Printer:\n",
+            "  Region Customer  Product  Sales\n",
+            "0   West    Alice   Laptop   1200\n",
+            "1   East      Bob  Printer    800\n",
+            "3  South    Alice   Laptop   1500\n",
+            "5   West    Alice  Printer    900\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample DataFrame\n",
+        "data = {\n",
+        "    \"Product\": [\"Chair\", \"Table\", \"Lamp\", \"Sofa\", \"Bookshelf\"],\n",
+        "    \"Category\": [\"Furniture\", \"Furniture\", \"Electronics\", \"Furniture\", \"Furniture\"],\n",
+        "    \"Price\": [100, 250, 80, 500, 300],\n",
+        "    \"Quantity\": [2, 1, 3, 1, 2]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Step 1: Increase Price of Furniture by 10%\n",
+        "df.loc[df[\"Category\"] == \"Furniture\", \"Price\"] *= 1.10\n",
+        "\n",
+        "# Step 2: Recalculate Total\n",
+        "df[\"Total\"] = df[\"Quantity\"] * df[\"Price\"]\n",
+        "\n",
+        "# Step 3: Show only Furniture rows\n",
+        "print(df[df[\"Category\"] == \"Furniture\"])"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "s_f4kocY0N1Z",
+        "outputId": "b1405d3c-a34c-4aea-a7b3-f9560923e1a6"
+      },
+      "execution_count": 53,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "     Product   Category  Price  Quantity  Total\n",
+            "0      Chair  Furniture  110.0         2  220.0\n",
+            "1      Table  Furniture  275.0         1  275.0\n",
+            "3       Sofa  Furniture  550.0         1  550.0\n",
+            "4  Bookshelf  Furniture  330.0         2  660.0\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "/tmp/ipython-input-2267957691.py:14: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value '[110. 275. 550. 330.]' has dtype incompatible with int64, please explicitly cast to a compatible dtype first.\n",
+            "  df.loc[df[\"Category\"] == \"Furniture\", \"Price\"] *= 1.10\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Step 1: Increase Price of Furniture by 10%\n",
+        "df.loc[df[\"Category\"] == \"Furniture\", \"Price\"] *= 1.10\n",
+        "\n",
+        "# Step 2: Recalculate Total only for Furniture rows\n",
+        "df.loc[df[\"Category\"] == \"Furniture\", \"Total\"] = df[\"Quantity\"] * df[\"Price\"]\n",
+        "\n",
+        "# Step 3: Show only Furniture rows\n",
+        "print(df[df[\"Category\"] == \"Furniture\"])"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "GzhRVbYn0aHp",
+        "outputId": "e239fcbc-ac71-433a-977c-4b236edab7ea"
+      },
+      "execution_count": 54,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "     Product   Category  Price  Quantity  Total\n",
+            "0      Chair  Furniture  121.0         2  242.0\n",
+            "1      Table  Furniture  302.5         1  302.5\n",
+            "3       Sofa  Furniture  605.0         1  605.0\n",
+            "4  Bookshelf  Furniture  363.0         2  726.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Step 1: Increase Price of Furniture by 10%\n",
+        "df.loc[df[\"Category\"] == \"Furniture\", \"Price\"] *= 1.10\n",
+        "\n",
+        "# Step 2: Recalculate Total only for Furniture rows\n",
+        "df.loc[df[\"Category\"] == \"Furniture\", \"Total\"] = df[\"Quantity\"] * df[\"Price\"]\n",
+        "\n",
+        "# Step 3: Show only updated Furniture rows\n",
+        "updated_furniture = df[df[\"Category\"] == \"Furniture\"]\n",
+        "print(updated_furniture)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "z8isFNSO0oOh",
+        "outputId": "b33f9eea-1879-4fbe-d951-47d3ce40668c"
+      },
+      "execution_count": 56,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "     Product   Category    Price  Quantity    Total\n",
+            "0      Chair  Furniture  146.410         2  292.820\n",
+            "1      Table  Furniture  366.025         1  366.025\n",
+            "3       Sofa  Furniture  732.050         1  732.050\n",
+            "4  Bookshelf  Furniture  439.230         2  878.460\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample DataFrame (you can replace this with your actual data)\n",
+        "data = {\n",
+        "    \"Customer\": [\"Alice\", \"Bob\", \"Charlie\", \"David\", \"Eva\"],\n",
+        "    \"Region\": [\"North\", \"South\", \"East\", \"West\", \"North\"],\n",
+        "    \"Total\": [250, 400, 150, 300, 500]\n",
+        "}\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Step 1: Sort by Total descending\n",
+        "sorted_df = df.sort_values(by=\"Total\", ascending=False)\n",
+        "print(\"Sorted by Total (descending):\")\n",
+        "print(sorted_df.head())\n",
+        "\n",
+        "# Step 2: Show top 5 sales\n",
+        "print(\"\\nTop 5 Sales:\")\n",
+        "print(sorted_df.head(5))\n",
+        "\n",
+        "# Step 3: Multi-level sort (Region then Customer)\n",
+        "multi_sort = df.sort_values(by=[\"Region\", \"Customer\"])\n",
+        "print(\"\\nSorted by Region then Customer:\")\n",
+        "print(multi_sort.head())"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "XgA1gCBE0x1R",
+        "outputId": "def80fa3-6af3-43dc-acb9-e65abfe014e0"
+      },
+      "execution_count": 57,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Sorted by Total (descending):\n",
+            "  Customer Region  Total\n",
+            "4      Eva  North    500\n",
+            "1      Bob  South    400\n",
+            "3    David   West    300\n",
+            "0    Alice  North    250\n",
+            "2  Charlie   East    150\n",
+            "\n",
+            "Top 5 Sales:\n",
+            "  Customer Region  Total\n",
+            "4      Eva  North    500\n",
+            "1      Bob  South    400\n",
+            "3    David   West    300\n",
+            "0    Alice  North    250\n",
+            "2  Charlie   East    150\n",
+            "\n",
+            "Sorted by Region then Customer:\n",
+            "  Customer Region  Total\n",
+            "2  Charlie   East    150\n",
+            "0    Alice  North    250\n",
+            "4      Eva  North    500\n",
+            "1      Bob  South    400\n",
+            "3    David   West    300\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample data (replace with your actual dataset)\n",
+        "data = {\n",
+        "    \"OrderID\": [101, 102, 103, 104, 105, 106, 107],\n",
+        "    \"Customer\": [\"Alice\", \"Bob\", \"Charlie\", \"David\", \"Eva\", \"Frank\", \"Grace\"],\n",
+        "    \"Region\": [\"North\", \"South\", \"East\", \"West\", \"North\", \"South\", \"East\"],\n",
+        "    \"Total\": [2500, 4000, 1500, 3000, 5000, 3500, 2800]\n",
+        "}\n",
+        "\n",
+        "# Create the DataFrame\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Step 1: Sort by \"Total\" in descending order\n",
+        "sorted_df = df.sort_values(by=\"Total\", ascending=False)\n",
+        "\n",
+        "# Step 2: Display the top 5 sales orders\n",
+        "top_5_sales = sorted_df.head(5)\n",
+        "print(\"Top 5 Sales Orders:\")\n",
+        "print(top_5_sales)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "i2C0-xQe1Cww",
+        "outputId": "68e491b3-0237-4780-90f6-2790177ed3ab"
+      },
+      "execution_count": 58,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Top 5 Sales Orders:\n",
+            "   OrderID Customer Region  Total\n",
+            "4      105      Eva  North   5000\n",
+            "1      102      Bob  South   4000\n",
+            "5      106    Frank  South   3500\n",
+            "3      104    David   West   3000\n",
+            "6      107    Grace   East   2800\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Sample data (you can replace this with your actual dataset)\n",
+        "data = {\n",
+        "    \"Customer\": [\"Alice\", \"Bob\", \"Charlie\", \"David\", \"Eva\", \"Frank\", \"Grace\"],\n",
+        "    \"Region\": [\"North\", \"South\", \"East\", \"West\", \"North\", \"South\", \"East\"],\n",
+        "    \"Total\": [2500, 4000, 1500, 3000, 5000, 3500, 2800]\n",
+        "}\n",
+        "\n",
+        "# Create the DataFrame\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Multi-level sort: first by Region, then by Customer\n",
+        "multi_sort = df.sort_values(by=[\"Region\", \"Customer\"])\n",
+        "\n",
+        "# Display the sorted DataFrame\n",
+        "print(\"Sorted by Region then Customer:\")\n",
+        "print(multi_sort)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "ErQXIyvf1SkA",
+        "outputId": "adf83fb2-e916-49e3-91f4-4d5d9580e2a1"
+      },
+      "execution_count": 59,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Sorted by Region then Customer:\n",
+            "  Customer Region  Total\n",
+            "2  Charlie   East   1500\n",
+            "6    Grace   East   2800\n",
+            "0    Alice  North   2500\n",
+            "4      Eva  North   5000\n",
+            "1      Bob  South   4000\n",
+            "5    Frank  South   3500\n",
+            "3    David   West   3000\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
